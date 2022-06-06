@@ -23,8 +23,29 @@
     background-color: aquamarine;
 }
 
+#input {}
+
+#search_button {}
+
+h3 {
+    color: aqua;
+}
+
 #results {
     width: 750px;
     height: 1000px;
     background-color: red;
+    flex: auto;
 }
+
+.result {
+    width: 150px;
+    height: 225px;
+    justify-items: center;
+}
+
+.album_artwork {
+    width: 150px;
+}
+
+.song_title {}
