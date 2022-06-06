@@ -1,20 +1,20 @@
 // Global Variables
-const body = document.getElementById('body');
-
 let searchTerm = 'illiterate+light';
-let parameterKeyValue = `media=music&term=${searchTerm}`;
-let fetchURL = `https://itunes.apple.com/search?${parameterKeyValue}`;
+const qtyOfResults = 12;
+
+const body = document.getElementById('body');
+const parameterKeyValue = `media=music&term=${searchTerm}`;
+const fetchURL = `https://itunes.apple.com/search?${parameterKeyValue}`;
 
 console.log(`fetchURL: ${fetchURL}`);
 
-getResults(fetchURL);
-console.log(`post getResults() call`);
+getResults();
 
-// ---------------------------------------------
-//Functions
+
+// -------------- Functions ----------------
 
 // API call to itunes
-function getResults(fetchURL) {
+function getResults() {
     fetch(fetchURL, {
         "method": "GET",
         "headers": {
@@ -34,11 +34,9 @@ function getResults(fetchURL) {
     });
 }
 
-// Creates search results
+// Creates elements & fills them with query results
 function createResults(data) {
-    console.log(`function main() called successfully`);
-
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < qtyOfResults; i++) {
         
         // Result element
         let resultElement = document.createElement('div');
@@ -46,10 +44,10 @@ function createResults(data) {
         results.appendChild(resultElement);
 
         // Album img
-        let resultImg = document.createElement('img');
-        resultImg.classList.add('album_artwork');
-        resultImg.src = data.results[i].artworkUrl100;
-        resultElement.appendChild(resultImg);
+        let albumArtwork = document.createElement('img');
+        albumArtwork.classList.add('album_artwork');
+        albumArtwork.src = data.results[i].artworkUrl100;
+        resultElement.appendChild(albumArtwork);
 
         // Track name
         let trackName = document.createElement('div');
@@ -66,19 +64,12 @@ function createResults(data) {
     console.log('Finished loading search results.');
 }
 
-// Formats user input search query for API call
-function formatQueryString(x){
+// Formats user query input for the API call
+function formatQueryString(x) {
     // Replace spaces between words with '+' and cut whitespace off front & back
 }
 
-console.log('this log is follows all functions');
-
-
-
-
-/* --------------------------------------------
-
-Notes
+/* --------------- Notes --------------------
 
 event.preventDefault() ... so console doesn't reload upon every submit
 
