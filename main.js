@@ -1,10 +1,9 @@
 // Global Variables
-
 const body = document.getElementById('body');
-const qtyOfResults = 12;
+let numResults = 12;
 let searchTerm = '';
 let parameterKeyValue = 'media=music&term=';
-const fetchURL = 'https://itunes.apple.com/search?';
+let fetchURL = 'https://itunes.apple.com/search?';
 
 // Event listener
 display.addEventListener('submit', (e) => {
@@ -12,17 +11,17 @@ display.addEventListener('submit', (e) => {
     let input = document.querySelector('#input');
     let display = document.querySelector('#display');
     searchTerm = input.value;
-    fetchURL += parameterKeyValue + searchTerm; // <- not happening
+    fetchURL += parameterKeyValue + searchTerm;
     console.log(`input.value: ${input.value}`);
     console.log(`searchTerm: ${searchTerm}`)
     console.log(`parameterKeyValue: ${parameterKeyValue}`)
-    console.log(`fetchURL: ${fetchURL}`);
-    getResults();
+    console.log(`fetchURL before function call: ${fetchURL}`);
+    fetchItunesData();
 });
 
 // API call to itunes
-function getResults() {
-    console.log(`fetchURL: ${fetchURL}`);
+function fetchItunesData() {
+    console.log(`fetchURL @ start of request: ${fetchURL}`);
     fetch(fetchURL, {
         "method": "GET",
         "headers": {
@@ -30,7 +29,7 @@ function getResults() {
         }
     })
     .then(function (response) {
-        console.log(`response: ${response}`);
+        console.log(response);
         return response.json();
     })
     .then(function (data) {
@@ -44,7 +43,7 @@ function getResults() {
 
 // Creates elements & fills them with query results
 function createResults(data) {
-    for (let i = 0; i < qtyOfResults; i++) {
+    for (let i = 0; i < numResults; i++) {
         
         // Result element
         let resultElement = document.createElement('div');
@@ -76,7 +75,3 @@ function createResults(data) {
 function formatQueryString(x) {
     // Replace spaces between words with '+' and cut whitespace off front & back
 }
-
-/* --------------- Notes --------------------
-
-*/
