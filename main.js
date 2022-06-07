@@ -1,20 +1,28 @@
 // Global Variables
-let searchTerm = 'illiterate+light';
-const qtyOfResults = 12;
 
 const body = document.getElementById('body');
-const parameterKeyValue = `media=music&term=${searchTerm}`;
-const fetchURL = `https://itunes.apple.com/search?${parameterKeyValue}`;
+const qtyOfResults = 12;
+let searchTerm = '';
+let parameterKeyValue = 'media=music&term=';
+const fetchURL = 'https://itunes.apple.com/search?';
 
-console.log(`fetchURL: ${fetchURL}`);
-
-getResults();
-
-
-// -------------- Functions ----------------
+// Event listener
+display.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let input = document.querySelector('#input');
+    let display = document.querySelector('#display');
+    searchTerm = input.value;
+    fetchURL += parameterKeyValue + searchTerm; // <- not happening
+    console.log(`input.value: ${input.value}`);
+    console.log(`searchTerm: ${searchTerm}`)
+    console.log(`parameterKeyValue: ${parameterKeyValue}`)
+    console.log(`fetchURL: ${fetchURL}`);
+    getResults();
+});
 
 // API call to itunes
 function getResults() {
+    console.log(`fetchURL: ${fetchURL}`);
     fetch(fetchURL, {
         "method": "GET",
         "headers": {
@@ -26,8 +34,8 @@ function getResults() {
         return response.json();
     })
     .then(function (data) {
-        console.log(`API fetch was successful. Data: ${data}`);
-        createhResults(data);
+        console.log(`API fetch was successful.`);
+        createResults(data);
     })
     .catch(err => {
         console.error(err);
@@ -70,7 +78,5 @@ function formatQueryString(x) {
 }
 
 /* --------------- Notes --------------------
-
-event.preventDefault() ... so console doesn't reload upon every submit
 
 */
