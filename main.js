@@ -13,16 +13,11 @@ function listenForQuery() {
     display.addEventListener('submit', (e) => {
         clearPreviousResults();
         e.preventDefault();
+
         const input = document.querySelector('#input');
         const display = document.querySelector('#display');
         searchTerm = input.value;
-        // formatQueryString(searchTerm);
         fetchURL += parameterKeyValue + searchTerm;
-    
-        console.log(`input.value: ${input.value}`);
-        console.log(`searchTerm: ${searchTerm}`)
-        console.log(`parameterKeyValue: ${parameterKeyValue}`)
-        console.log(`fetchURL before function call: ${fetchURL}`);
     
         fetchItunesData();
     });
@@ -30,18 +25,17 @@ function listenForQuery() {
     search_button.addEventListener('click', (e) => {
         clearPreviousResults();
         e.preventDefault();
+
         const input = document.querySelector('#input');
         const button = document.getElementById('#search_button');
         const inputTarget = e.target;
         if (inputTarget) {
             searchTerm = input.value;
-            // formatQueryString(searchTerm);
             fetchURL += parameterKeyValue + searchTerm;
-            
+
             fetchItunesData();
         }
     });
-
 }
 
 // API call to itunes
@@ -98,7 +92,7 @@ function createResults(data) {
 
 // Clear previous results
 function clearPreviousResults() {
-
+    results.innerHTML = '';
 }
 
 // Formats user query input for the API call
