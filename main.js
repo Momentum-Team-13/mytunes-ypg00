@@ -5,19 +5,42 @@ let searchTerm = '';
 let parameterKeyValue = 'media=music&term=';
 let fetchURL = 'https://itunes.apple.com/search?';
 
-// Event listener
-display.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let input = document.querySelector('#input');
-    let display = document.querySelector('#display');
-    searchTerm = input.value;
-    fetchURL += parameterKeyValue + searchTerm;
-    console.log(`input.value: ${input.value}`);
-    console.log(`searchTerm: ${searchTerm}`)
-    console.log(`parameterKeyValue: ${parameterKeyValue}`)
-    console.log(`fetchURL before function call: ${fetchURL}`);
-    fetchItunesData();
-});
+pressReturn();
+clickSearch();
+
+// Event listeners
+function pressReturn() {
+    display.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = document.querySelector('#input');
+        const display = document.querySelector('#display');
+        searchTerm = input.value;
+        // formatQueryString(searchTerm);
+        fetchURL += parameterKeyValue + searchTerm;
+    
+        console.log(`input.value: ${input.value}`);
+        console.log(`searchTerm: ${searchTerm}`)
+        console.log(`parameterKeyValue: ${parameterKeyValue}`)
+        console.log(`fetchURL before function call: ${fetchURL}`);
+    
+        fetchItunesData();
+    });
+}
+
+function clickSearch() {
+    search_button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const input = document.querySelector('#input');
+        const button = document.getElementById('#search_button');
+        const inputTarget = e.target;
+        if (inputTarget) {
+            searchTerm = input.value;
+            // formatQueryString(searchTerm);
+            fetchURL += parameterKeyValue + searchTerm;
+            fetchItunesData();
+        }
+    });
+}
 
 // API call to itunes
 function fetchItunesData() {
@@ -73,5 +96,5 @@ function createResults(data) {
 
 // Formats user query input for the API call
 function formatQueryString(x) {
-    // Replace spaces between words with '+' and cut whitespace off front & back
+
 }
