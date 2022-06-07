@@ -5,12 +5,13 @@ let searchTerm = '';
 let parameterKeyValue = 'media=music&term=';
 let fetchURL = 'https://itunes.apple.com/search?';
 
-pressReturn();
-clickSearch();
+listenForQuery();
 
 // Event listeners
-function pressReturn() {
+function listenForQuery() {
+
     display.addEventListener('submit', (e) => {
+        clearPreviousResults();
         e.preventDefault();
         const input = document.querySelector('#input');
         const display = document.querySelector('#display');
@@ -25,10 +26,9 @@ function pressReturn() {
     
         fetchItunesData();
     });
-}
 
-function clickSearch() {
     search_button.addEventListener('click', (e) => {
+        clearPreviousResults();
         e.preventDefault();
         const input = document.querySelector('#input');
         const button = document.getElementById('#search_button');
@@ -37,9 +37,11 @@ function clickSearch() {
             searchTerm = input.value;
             // formatQueryString(searchTerm);
             fetchURL += parameterKeyValue + searchTerm;
+            
             fetchItunesData();
         }
     });
+
 }
 
 // API call to itunes
@@ -64,7 +66,7 @@ function fetchItunesData() {
     });
 }
 
-// Creates elements & fills them with query results
+// Creates results elements & fills them with query results
 function createResults(data) {
     for (let i = 0; i < numResults; i++) {
         
@@ -92,6 +94,11 @@ function createResults(data) {
         resultElement.appendChild(artistName);
     }
     console.log('Finished loading search results.');
+}
+
+// Clear previous results
+function clearPreviousResults() {
+
 }
 
 // Formats user query input for the API call
