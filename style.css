@@ -4,26 +4,26 @@
 
 #player {
     align-content: center;
-    width: 750px;
-    height: 30px;
+    width: 850px;
+    height: 75px;
     background-color: blue;
 }
 
 .hr {
-    width: 750px;
+    width: 850px;
     padding: 0px;
     margin: 0px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-#search_bar {
-    width: 750px;
+#search {
+    width: 850px;
     height: 75px;
     background-color: aquamarine;
 }
 
-#display {}
+#search_bar {}
 
 #input {}
 
@@ -34,15 +34,17 @@ h3 {
 }
 
 #results {
-    width: 750px;
+    width: 850px;
     height: 1000px;
     background-color: red;
-    flex: auto;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .result {
     width: 150px;
     height: 225px;
+    margin: 10px;
     justify-items: center;
 }
 
@@ -51,3 +53,7 @@ h3 {
 }
 
 .song_title {}
+
+.audio_source {
+    display: none;
+}

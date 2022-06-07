@@ -1,6 +1,7 @@
 // Global Variables
 const body = document.getElementById('body');
-let numResults = 12;
+const audio = document.getElementById('audio');
+let numResults = 45;
 let searchTerm = '';
 let parameterKeyValue = 'media=music&term=';
 let fetchURL = 'https://itunes.apple.com/search?';
@@ -10,12 +11,11 @@ listenForQuery();
 // Event listeners
 function listenForQuery() {
 
-    display.addEventListener('submit', (e) => {
+    search_bar.addEventListener('submit', (e) => {
         clearPreviousResults();
         e.preventDefault();
 
         const input = document.querySelector('#input');
-        const display = document.querySelector('#display');
         searchTerm = input.value;
         fetchURL += parameterKeyValue + searchTerm;
     
@@ -27,13 +27,19 @@ function listenForQuery() {
         e.preventDefault();
 
         const input = document.querySelector('#input');
-        const button = document.getElementById('#search_button');
         const inputTarget = e.target;
         if (inputTarget) {
             searchTerm = input.value;
             fetchURL += parameterKeyValue + searchTerm;
 
             fetchItunesData();
+        }
+    });
+
+    results.addEventListener('click', (e) => {
+        if (e.target.classList.contains('song_title')) {
+            console.log(`e.target: ${e.target}`);
+            audio.src = e.target.nextElementSibling.innerText;
         }
     });
 }
@@ -81,11 +87,19 @@ function createResults(data) {
         trackName.innerText = data.results[i].trackName;
         resultElement.appendChild(trackName);
 
+        // Hidden Div
+        let audioSource = document.createElement('div');
+        audioSource.classList.add('audio_source');
+        audioSource.innerText = data.results[i].previewUrl;
+        resultElement.appendChild(audioSource);
+
         // Band name
         let artistName = document.createElement('div');
         artistName.classList.add('artist_name');
         artistName.innerText = data.results[i].artistName;
         resultElement.appendChild(artistName);
+
+
     }
     console.log('Finished loading search results.');
 }
@@ -99,3 +113,7 @@ function clearPreviousResults() {
 function formatQueryString(x) {
 
 }
+
+/* ------ Notes --------
+
+*/
