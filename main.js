@@ -17,7 +17,6 @@ function eventListeners() {
 
 function fetchItunesData() {
     let fetchURL = createFetchURL()
-    clearPreviousResults()
     
     fetch(fetchURL, {
         method: 'GET',
@@ -41,6 +40,9 @@ function fetchItunesData() {
 
 function renderSearchResults(data) {
     const numResultsToDisplay = 45
+    search_results_text.innerText = `Showing results for: ${input.value}`
+    clearPreviousResults()
+
     for (let i = 0; i < numResultsToDisplay; i++) {
         
         let resultBox = document.createElement('div')
@@ -62,19 +64,22 @@ function renderSearchResults(data) {
         artistName.innerText = data.results[i].artistName
         resultBox.appendChild(artistName)
         
-        let audioSource = document.createElement('div')
-        audioSource.classList.add('audio_source')
-        audioSource.innerText = data.results[i].previewUrl
-        resultBox.appendChild(audioSource)
+        let audioUrl = document.createElement('div')
+        audioUrl.classList.add('audio_url')
+        audioUrl.innerText = data.results[i].previewUrl
+        resultBox.appendChild(audioUrl)
     }
+
     console.log('Finished loading search results.')
 }
 
 function playTrack(target) {
     if (target.parentElement.classList.contains('result_box')) {
         audio_element.src = target.parentElement.children[3].innerText
+        now_playing_display.innerText = `${target.parentElement.children[1].innerText} by ${target.parentElement.children[2].innerText}`
     } else if (target.classList.contains('result_box')) {
         audio_element.src = target.children[3].innerText
+        now_playing_display.innerText = `${target.children[1].innerText} by ${target.children[2].innerText}`
     } 
     audio_element.play()
     console.log('Playing selected track')
