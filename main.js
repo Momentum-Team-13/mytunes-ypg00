@@ -1,13 +1,10 @@
-// Global Variables
-const body_element = document.getElementById('body_element')
-const audio_element = document.getElementById('audio_element')
-let numResultsToDisplay = 45
-let parameterKeyValue = 'media=music&term='
-
 listenForQuery()
 
 // Event listeners
 function listenForQuery(){
+
+    const body_element = document.getElementById('body_element')
+    const audio_element = document.getElementById('audio_element')
 
     search_bar.addEventListener('submit', (e) => {
         e.preventDefault()
@@ -54,7 +51,9 @@ function fetchItunesData(){
 
 // Creates result elements & fills them with fetch data
 function createResults(data){
-    
+
+    let numResultsToDisplay = 45
+
     for (let i = 0; i < numResultsToDisplay; i++){
         
         // Result element
@@ -108,8 +107,10 @@ function clearPreviousResults(){
 
 // Concatinates together fetchURL
 function createFetchURL(){
-    input = document.querySelector('#input')
+    // input = document.querySelector('#input')
+
     const itunesApiURL = 'https://itunes.apple.com/search?'
+    const parameterKeyValue = 'media=music&term='
     const searchTerm = input.value
     let fetchURL = itunesApiURL + parameterKeyValue + searchTerm
     
