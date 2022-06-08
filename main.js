@@ -9,7 +9,7 @@ function eventListeners() {
         e.preventDefault()
         fetchItunesData()
     })
-    results_element.addEventListener('click', (e) => {
+    results_display.addEventListener('click', (e) => {
         let target = e.target
         playTrack(target)
     })
@@ -47,7 +47,7 @@ function renderSearchResults(data) {
         
         let resultBox = document.createElement('div')
         resultBox.classList.add('result_box')
-        results_element.appendChild(resultBox)
+        results_display.appendChild(resultBox)
         
         let albumArtwork = document.createElement('img')
         albumArtwork.classList.add('album_artwork', 'result_item')
@@ -95,6 +95,6 @@ function createFetchURL() {
 }
 
 function clearPreviousResults() {
-    results_element.innerHTML = ''
+    results_display.innerHTML = ''
     input.value = ''
 }
