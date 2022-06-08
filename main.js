@@ -1,10 +1,6 @@
-listenForQuery()
+eventListeners()
 
-// Event listeners
-function listenForQuery(){
-    const body_element = document.getElementById('body_element')
-    const audio_element = document.getElementById('audio_element')
-
+function eventListeners() {
     search_bar.addEventListener('submit', (e) => {
         e.preventDefault()
         fetchItunesData()
@@ -14,16 +10,15 @@ function listenForQuery(){
         fetchItunesData()
     })
     results_element.addEventListener('click', (e) => {
-        audio_element.src = e.target.nextElementSibling.innerText
-        audio_element.play()
+        let target = e.target
+        playTrack(target)
     })
 }
 
-// API call to itunes
-function fetchItunesData(){
-    clearPreviousResults()
+function fetchItunesData() {
     let fetchURL = createFetchURL()
-
+    clearPreviousResults()
+    
     fetch(fetchURL, {
         method: 'GET',
         headers: {
@@ -37,79 +32,64 @@ function fetchItunesData(){
     .then(function (data) {
         console.log(data)
         console.log('API fetch was successful.')
-        createResults(data)
+        renderSearchResults(data)
     })
     .catch(err => {
         console.error(err)
     })
 }
 
-// Creates result elements & fills them with fetch data
-function createResults(data){
-    let numResultsToDisplay = 45
-
-    for (let i = 0; i < numResultsToDisplay; i++){
+function renderSearchResults(data) {
+    const numResultsToDisplay = 45
+    for (let i = 0; i < numResultsToDisplay; i++) {
         
-        // Result element (Parent for everything below)
-        let result = document.createElement('div')
-        result.classList.add('result_box')
-        results_element.appendChild(result)
+        let resultBox = document.createElement('div')
+        resultBox.classList.add('result_box')
+        results_element.appendChild(resultBox)
         
-        // Album img
         let albumArtwork = document.createElement('img')
         albumArtwork.classList.add('album_artwork', 'result_item')
         albumArtwork.src = data.results[i].artworkUrl100
-        result.appendChild(albumArtwork)
+        resultBox.appendChild(albumArtwork)
         
-        // Hidden Div
-        let audioSource1 = document.createElement('div')
-        audioSource1.classList.add('audio_source')
-        audioSource1.innerText = data.results[i].previewUrl
-        result.appendChild(audioSource1)
-        
-        // Track name
         let trackName = document.createElement('div')
         trackName.classList.add('track_name', 'result_item')
         trackName.innerText = data.results[i].trackName
-        result.appendChild(trackName)
+        resultBox.appendChild(trackName)
         
-        // Hidden Div
-        let audioSource2 = document.createElement('div')
-        audioSource2.classList.add('audio_source')
-        audioSource2.innerText = data.results[i].previewUrl
-        result.appendChild(audioSource2)
-        
-        // Band name
         let artistName = document.createElement('div')
         artistName.classList.add('artist_name', 'result_item')
         artistName.innerText = data.results[i].artistName
-        result.appendChild(artistName)
+        resultBox.appendChild(artistName)
         
-        // Hidden Div
-        let audioSource3 = document.createElement('div')
-        audioSource3.classList.add('audio_source')
-        audioSource3.innerText = data.results[i].previewUrl
-        result.appendChild(audioSource3)
+        let audioSource = document.createElement('div')
+        audioSource.classList.add('audio_source')
+        audioSource.innerText = data.results[i].previewUrl
+        resultBox.appendChild(audioSource)
     }
-
     console.log('Finished loading search results.')
 }
 
-// Clear previous results
-function clearPreviousResults(){
-    results_element.innerHTML = ''
+function playTrack(target) {
+    if (target.parentElement.classList.contains('result_box')) {
+        audio_element.src = target.parentElement.children[3].innerText
+    } else if (target.classList.contains('result_box')) {
+        audio_element.src = target.children[3].innerText
+    } 
+    audio_element.play()
+    console.log('Playing selected track')
 }
 
-// Concatinates together fetchURL
-function createFetchURL(){
-    // input = document.querySelector('#input')
-
-    const itunesApiURL = 'https://itunes.apple.com/search?'
+function createFetchURL() {
+    const itunesApiUrlBase = 'https://itunes.apple.com/search?'
     const parameterKeyValue = 'media=music&term='
     const searchTerm = input.value
-    const fetchURL = itunesApiURL + parameterKeyValue + searchTerm
-    
+    const fetchURL = itunesApiUrlBase + parameterKeyValue + searchTerm
     console.log(`fetchURL: ${fetchURL}`)
-
     return fetchURL
+}
+
+function clearPreviousResults() {
+    results_element.innerHTML = ''
+    input.value = ''
 }
