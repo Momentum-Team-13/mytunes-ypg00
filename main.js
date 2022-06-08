@@ -1,7 +1,7 @@
 // Global Variables
-const body = document.getElementById('body');
-const audio = document.getElementById('audio');
-let numResults = 45;
+const body_element = document.getElementById('body_element');
+const audio_element = document.getElementById('audio_element');
+let numResultsToDisplay = 45;
 let searchTerm = '';
 let parameterKeyValue = 'media=music&term=';
 let fetchURL = 'https://itunes.apple.com/search?';
@@ -36,10 +36,10 @@ function listenForQuery() {
         }
     });
 
-    results.addEventListener('click', (e) => {
-        if (e.target.classList.contains('song_title')) {
-            console.log(`e.target: ${e.target}`);
-            audio.src = e.target.nextElementSibling.innerText;
+    results_element.addEventListener('click', (e) => {
+        if (e.target.classList.contains('result_item')) {
+            console.log(e.target);
+            audio_element.src = e.target.nextElementSibling.innerText;
         }
     });
 }
@@ -66,54 +66,60 @@ function fetchItunesData() {
     });
 }
 
-// Creates results elements & fills them with query results
+// Creates result elements & fills them with fetch data
 function createResults(data) {
-    for (let i = 0; i < numResults; i++) {
+    for (let i = 0; i < numResultsToDisplay; i++) {
         
         // Result element
-        let resultElement = document.createElement('div');
-        resultElement.classList.add('result');
-        results.appendChild(resultElement);
+        let result = document.createElement('div');
+        result.classList.add('result_box');
+        results_element.appendChild(result);
 
         // Album img
         let albumArtwork = document.createElement('img');
-        albumArtwork.classList.add('album_artwork');
+        albumArtwork.classList.add('album_artwork', 'result_item');
         albumArtwork.src = data.results[i].artworkUrl100;
-        resultElement.appendChild(albumArtwork);
-
+        result.appendChild(albumArtwork);
+        
+        // Hidden Div
+        let audioSource1 = document.createElement('div');
+        audioSource1.classList.add('audio_source');
+        audioSource1.innerText = data.results[i].previewUrl;
+        result.appendChild(audioSource1);
+        
         // Track name
         let trackName = document.createElement('div');
-        trackName.classList.add('song_title');
+        trackName.classList.add('track_name', 'result_item');
         trackName.innerText = data.results[i].trackName;
-        resultElement.appendChild(trackName);
-
+        result.appendChild(trackName);
+        
         // Hidden Div
-        let audioSource = document.createElement('div');
-        audioSource.classList.add('audio_source');
-        audioSource.innerText = data.results[i].previewUrl;
-        resultElement.appendChild(audioSource);
-
+        let audioSource2 = document.createElement('div');
+        audioSource2.classList.add('audio_source');
+        audioSource2.innerText = data.results[i].previewUrl;
+        result.appendChild(audioSource2);
+        
         // Band name
         let artistName = document.createElement('div');
-        artistName.classList.add('artist_name');
+        artistName.classList.add('artist_name', 'result_item');
         artistName.innerText = data.results[i].artistName;
-        resultElement.appendChild(artistName);
-
-
+        result.appendChild(artistName);
+        
+        // Hidden Div
+        let audioSource3 = document.createElement('div');
+        audioSource3.classList.add('audio_source');
+        audioSource3.innerText = data.results[i].previewUrl;
+        result.appendChild(audioSource3);
     }
     console.log('Finished loading search results.');
 }
 
 // Clear previous results
 function clearPreviousResults() {
-    results.innerHTML = '';
+    results_element.innerHTML = '';
 }
 
 // Formats user query input for the API call
 function formatQueryString(x) {
 
 }
-
-/* ------ Notes --------
-
-*/

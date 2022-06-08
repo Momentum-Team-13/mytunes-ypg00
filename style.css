@@ -33,7 +33,7 @@ h3 {
     color: aqua;
 }
 
-#results {
+#results_element {
     width: 850px;
     height: 1000px;
     background-color: red;
@@ -41,7 +41,7 @@ h3 {
     flex-wrap: wrap;
 }
 
-.result {
+.result_box {
     width: 150px;
     height: 225px;
     margin: 10px;
@@ -52,7 +52,9 @@ h3 {
     width: 150px;
 }
 
-.song_title {}
+.track_name {
+    width: 150px;
+}
 
 .audio_source {
     display: none;
