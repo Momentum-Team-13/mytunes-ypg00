@@ -1,7 +1,6 @@
 eventListeners()
 
 function eventListeners() {
-
     document.getElementById('search_bar').addEventListener('submit', (e) => {
         e.preventDefault()
         fetchItunesData()
@@ -18,7 +17,8 @@ function eventListeners() {
 
 function fetchItunesData() {
     const fetchURL = createFetchURL()
-    
+    console.log(`fetchURL prior to API call: ${fetchURL}`)
+
     fetch(fetchURL, {
         method: 'GET',
         headers: {
@@ -40,13 +40,12 @@ function fetchItunesData() {
 }
 
 function renderSearchResults(data) {
-    const numResultsToDisplay = 45
-
-    const resultsDisplay = document.getElementById('results_display')
     const showingResultsDisplayText = document.getElementById('showing_results_text')
     const input = document.getElementById('input_search_bar')
+    const resultsDisplay = document.getElementById('results_display')
+    const numResultsToDisplay = 40
 
-    showingResultsDisplayText.innerText = `Showing results for: ${input.value}`
+    showingResultsDisplayText.innerHTML = `<strong>Showing results for: </strong>${input.value}`
     clearPreviousQuery()
 
     for (let i = 0; i < numResultsToDisplay; i++) {
@@ -75,7 +74,6 @@ function renderSearchResults(data) {
         audioUrl.innerText = data.results[i].previewUrl
         resultBox.appendChild(audioUrl)
     }
-
     console.log('Finished loading search results.')
 }
 
@@ -99,9 +97,7 @@ function createFetchURL() {
     const itunesApiUrlBase = 'https://itunes.apple.com/search?'
     const parameterKeyValue = 'media=music&term='
     const searchTerm = inputSearchBar.value
-    const fetchURL = itunesApiUrlBase + parameterKeyValue + searchTerm
-    console.log(`fetchURL: ${fetchURL}`)
-    return fetchURL
+    return itunesApiUrlBase + parameterKeyValue + searchTerm
 }
 
 function clearPreviousQuery() {

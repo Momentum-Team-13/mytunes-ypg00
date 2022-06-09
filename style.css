@@ -1,62 +1,101 @@
+#entire_player {
+    font-family: 'Joan', serif;
+}
+
 #header {
+    font-size: 60px;
+    width: 850px;
     text-align: center;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 #player {
     align-content: center;
     width: 850px;
-    height: 150px;
-    background-color: blue;
+    height: 75px;
+    margin: 0 auto;
+    padding-bottom: 25px;
 }
 
-#now_playing {}
-
-.hr {
+#audio_element {
+    margin: 0 auto;
     width: 850px;
-    padding: 0px;
-    margin: 0px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+}
+
+#now_playing {
+    margin: 0 auto;
+    text-align: center;
 }
 
 #search {
+    margin: 0 auto;
     width: 850px;
-    height: 150px;
-    background-color: aquamarine;
+    height: 90px;
+    display: flex;
+    justify-content: center;
 }
 
-#search_bar {}
+#search_bar {
+    margin: 0 auto;
+}
 
-#input_search_bar {}
+#input_search_bar {
+    font-family: 'Joan', serif;
+    width: 400px;
+    height: 50px;
+    margin: 0 auto;
+    margin-left: 135px;
+    font-size: 24px;
+}
 
-#search_button {}
+#search_button {
+    margin: 0 auto;
+    margin-right: 175px;
+    margin-left: 10px;
+    height: 56px;
+    width: 120px;
+    font-size: 20px;
+}
 
 #showing_results_text {
+    margin: 0 auto;
     width: 850px;
-    height: 75px;
+    height: 35px;
 }
 
 #results_display {
-    width: 850px;
-    height: 1000px;
-    background-color: red;
+    margin: 0 auto;
+    width: 880px;
+    padding-left: 14px;
     display: flex;
     flex-wrap: wrap;
 }
 
 .result_box {
-    width: 150px;
-    height: 225px;
-    margin: 10px;
+    width: 200px;
+    height: 300px;
+    margin: 8px;
     justify-items: center;
 }
 
 .album_artwork {
-    width: 150px;
+    width: 200px;
 }
 
 .track_name {
-    width: 150px;
+    width: 200px;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    padding-bottom: 7px;
+}
+
+.artist_name {
+    width: 200px;
+    font-size: 13px;
+    text-align: center;
 }
 
 .audio_url {

@@ -4,26 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Joan&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
     <title>Tunes</title>
 </head>
 
 <body>
-    <div id="body_element">
-        <h1 id="header">30 Second Tunes</h1>
+    <div id="entire_player">
+        <h1 id="header">myTunes</h1>
         <div id="player">
-            <audio id="audio_element" controls src="">Alt Text</audio>
+            <audio id="audio_element" controls src="">Player</audio>
             <p id="now_playing"></p>
         </div>
-        <hr class="hr">
         <div id="search">
             <form id="search_bar">
                 <input id="input_search_bar" type="text">
             </form>
             <button id="search_button">Search</button>
         </div>
-        <hr class="hr">
         <div id="showing_results_text"></div>
         <div id="results_display"></div>
     </div>
