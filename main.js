@@ -1,22 +1,23 @@
 eventListeners()
 
 function eventListeners() {
-    search_bar.addEventListener('submit', (e) => {
+
+    document.getElementById('search_bar').addEventListener('submit', (e) => {
         e.preventDefault()
         fetchItunesData()
     })  
-    search_button.addEventListener('click', (e) => {
+    document.getElementById('search_button').addEventListener('click', (e) => {
         e.preventDefault()
         fetchItunesData()
     })
-    results_display.addEventListener('click', (e) => {
+    document.getElementById('results_display').addEventListener('click', (e) => {
         let target = e.target
         playTrack(target)
     })
 }
 
 function fetchItunesData() {
-    let fetchURL = createFetchURL()
+    const fetchURL = createFetchURL()
     
     fetch(fetchURL, {
         method: 'GET',
@@ -40,14 +41,19 @@ function fetchItunesData() {
 
 function renderSearchResults(data) {
     const numResultsToDisplay = 45
-    search_results_text.innerText = `Showing results for: ${input.value}`
-    clearPreviousResults()
+
+    const resultsDisplay = document.getElementById('results_display')
+    const showingResultsDisplayText = document.getElementById('showing_results_text')
+    const input = document.getElementById('input_search_bar')
+
+    showingResultsDisplayText.innerText = `Showing results for: ${input.value}`
+    clearPreviousQuery()
 
     for (let i = 0; i < numResultsToDisplay; i++) {
         
         let resultBox = document.createElement('div')
         resultBox.classList.add('result_box')
-        results_display.appendChild(resultBox)
+        resultsDisplay.appendChild(resultBox)
         
         let albumArtwork = document.createElement('img')
         albumArtwork.classList.add('album_artwork', 'result_item')
@@ -74,27 +80,31 @@ function renderSearchResults(data) {
 }
 
 function playTrack(target) {
+    const audioElement = document.getElementById('audio_element')
+    const nowPlayingDisplay = document.getElementById('now_playing')
+
     if (target.parentElement.classList.contains('result_box')) {
-        audio_element.src = target.parentElement.children[3].innerText
-        now_playing_display.innerText = `${target.parentElement.children[1].innerText} by ${target.parentElement.children[2].innerText}`
+        audioElement.src = target.parentElement.children[3].innerText
+        nowPlayingDisplay.innerHTML = `<strong>Now playing: </strong>${target.parentElement.children[1].innerText} by ${target.parentElement.children[2].innerText}`
     } else if (target.classList.contains('result_box')) {
-        audio_element.src = target.children[3].innerText
-        now_playing_display.innerText = `${target.children[1].innerText} by ${target.children[2].innerText}`
+        audioElement.src = target.children[3].innerText
+        nowPlayingDisplay.innerHTML = `<strong>Now playing: </strong>${target.children[1].innerText} by ${target.children[2].innerText}`
     } 
-    audio_element.play()
+    audioElement.play()
     console.log('Playing selected track')
 }
 
 function createFetchURL() {
+    const inputSearchBar = document.getElementById('input_search_bar')
     const itunesApiUrlBase = 'https://itunes.apple.com/search?'
     const parameterKeyValue = 'media=music&term='
-    const searchTerm = input.value
+    const searchTerm = inputSearchBar.value
     const fetchURL = itunesApiUrlBase + parameterKeyValue + searchTerm
     console.log(`fetchURL: ${fetchURL}`)
     return fetchURL
 }
 
-function clearPreviousResults() {
-    results_display.innerHTML = ''
-    input.value = ''
+function clearPreviousQuery() {
+    document.getElementById('results_display').innerHTML = ''
+    document.getElementById('input_search_bar').value = ''
 }

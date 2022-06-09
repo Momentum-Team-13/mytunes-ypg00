@@ -9,6 +9,8 @@
     background-color: blue;
 }
 
+#now_playing {}
+
 .hr {
     width: 850px;
     padding: 0px;
@@ -25,11 +27,11 @@
 
 #search_bar {}
 
-#input {}
+#input_search_bar {}
 
 #search_button {}
 
-#search_results_text {
+#showing_results_text {
     width: 850px;
     height: 75px;
 }
